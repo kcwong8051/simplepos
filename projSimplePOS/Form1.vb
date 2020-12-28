@@ -90,7 +90,7 @@
             Return
         End If
         Dim _qty As Integer = dgvTrxLine.SelectedRows(0).Cells(4).Value
-        If _qty = 1 Then
+        If _qty = 0 Then
             Return
         End If
         _qty -= 1
@@ -125,32 +125,43 @@
         If DsTrx1.dtTransaction.Rows.Count = 0 Then
             Return
         End If
-        Dim objHeader As New clsTrxHeader
-        For Each row_1 As DSTrx.dtTransactionRow In DsTrx1.dtTransaction.Rows
-            Dim mapRow As New Dictionary(Of String, String)
-            mapRow.Add("trxid", objHeader.trxid)
-            mapRow.Add("lineno", row_1.LineNum.ToString)
-            mapRow.Add("inputbarcode", row_1.Barcode)
-            mapRow.Add("itemno", row_1.ItemNum)
-            mapRow.Add("itemdesc", row_1.ItemDesc)
-            mapRow.Add("inputqty", row_1.Qty.ToString)
-            mapRow.Add("subtotal", row_1.SubTotal.ToString)
-            Dim objLine As New clsTrxLine(mapRow)
-            objHeader.lstTrxLine.Add(objLine)
-        Next
-        objHeader.children = objHeader.lstTrxLine.Count
-        objHeader.totalAmt = CType(lblAmount.Text, Decimal)
-        Dim isSaved As Boolean = objHeader.SaveIt()
-        If isSaved = True Then
-            DsTrx1.dtTransaction.Clear()
-            dgvTrxLine.Refresh()
-            lblAmount.Text = "0.00"
-            txtInput.Text = ""
-            txtQty.Text = "1"
-            txtInput.Select()
-        Else
-            MsgBox("結賬失敗，請聯絡技術支援。", vbOKOnly, "結賬未能成功")
+        If IsNumeric(lblAmount.Text) = False Then
+            Return
         End If
+
+        Dim dlgExchange As Form = New frmExchange(CType(lblAmount.Text, Decimal))
+        dlgExchange.StartPosition = FormStartPosition.CenterParent
+        Dim response = dlgExchange.ShowDialog(Me)
+
+        If response = DialogResult.OK Then
+            Dim objHeader As New clsTrxHeader
+            For Each row_1 As DSTrx.dtTransactionRow In DsTrx1.dtTransaction.Rows
+                Dim mapRow As New Dictionary(Of String, String)
+                mapRow.Add("trxid", objHeader.trxid)
+                mapRow.Add("lineno", row_1.LineNum.ToString)
+                mapRow.Add("inputbarcode", row_1.Barcode)
+                mapRow.Add("itemno", row_1.ItemNum)
+                mapRow.Add("itemdesc", row_1.ItemDesc)
+                mapRow.Add("inputqty", row_1.Qty.ToString)
+                mapRow.Add("subtotal", row_1.SubTotal.ToString)
+                Dim objLine As New clsTrxLine(mapRow)
+                objHeader.lstTrxLine.Add(objLine)
+            Next
+            objHeader.children = objHeader.lstTrxLine.Count
+            objHeader.totalAmt = CType(lblAmount.Text, Decimal)
+            Dim isSaved As Boolean = objHeader.SaveIt()
+            If isSaved = True Then
+                DsTrx1.dtTransaction.Clear()
+                dgvTrxLine.Refresh()
+                lblAmount.Text = "0.00"
+                txtInput.Text = ""
+                txtQty.Text = "1"
+                txtInput.Select()
+            Else
+                MsgBox("結賬失敗，請聯絡技術支援。", vbOKOnly, "結賬未能成功")
+            End If
+        End If
+
     End Sub
 
     Private Sub btnSummary_Click(sender As Object, e As EventArgs) Handles btnSummary.Click
