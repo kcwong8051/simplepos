@@ -48,9 +48,10 @@ Partial Class Form1
         Me.tabItem = New System.Windows.Forms.TabPage()
         Me.dgvItem = New System.Windows.Forms.DataGridView()
         Me.tabSalesReport = New System.Windows.Forms.TabPage()
-        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.btnSummary = New System.Windows.Forms.Button()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
+        Me.btnDeleteRow = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.tabPOS.SuspendLayout()
         CType(Me.dgvTrxLine, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -74,6 +75,7 @@ Partial Class Form1
         '
         'tabPOS
         '
+        Me.tabPOS.Controls.Add(Me.btnDeleteRow)
         Me.tabPOS.Controls.Add(Me.btnCheck)
         Me.tabPOS.Controls.Add(Me.btnCommon1)
         Me.tabPOS.Controls.Add(Me.lblAmount)
@@ -107,7 +109,7 @@ Partial Class Form1
         '
         Me.btnCommon1.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.btnCommon1.Font = New System.Drawing.Font("PMingLiU", 27.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.btnCommon1.Location = New System.Drawing.Point(640, 56)
+        Me.btnCommon1.Location = New System.Drawing.Point(640, 17)
         Me.btnCommon1.Name = "btnCommon1"
         Me.btnCommon1.Size = New System.Drawing.Size(155, 67)
         Me.btnCommon1.TabIndex = 8
@@ -293,12 +295,14 @@ Partial Class Form1
         Me.tabSalesReport.Text = "營業報表"
         Me.tabSalesReport.UseVisualStyleBackColor = True
         '
-        'DateTimePicker1
+        'btnSummary
         '
-        Me.DateTimePicker1.Location = New System.Drawing.Point(147, 19)
-        Me.DateTimePicker1.Name = "DateTimePicker1"
-        Me.DateTimePicker1.Size = New System.Drawing.Size(154, 27)
-        Me.DateTimePicker1.TabIndex = 0
+        Me.btnSummary.Location = New System.Drawing.Point(334, 16)
+        Me.btnSummary.Name = "btnSummary"
+        Me.btnSummary.Size = New System.Drawing.Size(112, 37)
+        Me.btnSummary.TabIndex = 2
+        Me.btnSummary.Text = "交易總結"
+        Me.btnSummary.UseVisualStyleBackColor = True
         '
         'Label3
         '
@@ -310,14 +314,23 @@ Partial Class Form1
         Me.Label3.TabIndex = 1
         Me.Label3.Text = "查詢日期："
         '
-        'btnSummary
+        'DateTimePicker1
         '
-        Me.btnSummary.Location = New System.Drawing.Point(334, 16)
-        Me.btnSummary.Name = "btnSummary"
-        Me.btnSummary.Size = New System.Drawing.Size(112, 37)
-        Me.btnSummary.TabIndex = 2
-        Me.btnSummary.Text = "交易總結"
-        Me.btnSummary.UseVisualStyleBackColor = True
+        Me.DateTimePicker1.Location = New System.Drawing.Point(147, 19)
+        Me.DateTimePicker1.Name = "DateTimePicker1"
+        Me.DateTimePicker1.Size = New System.Drawing.Size(154, 27)
+        Me.DateTimePicker1.TabIndex = 0
+        '
+        'btnDeleteRow
+        '
+        Me.btnDeleteRow.BackColor = System.Drawing.Color.Transparent
+        Me.btnDeleteRow.Font = New System.Drawing.Font("PMingLiU", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.btnDeleteRow.Location = New System.Drawing.Point(640, 102)
+        Me.btnDeleteRow.Name = "btnDeleteRow"
+        Me.btnDeleteRow.Size = New System.Drawing.Size(155, 67)
+        Me.btnDeleteRow.TabIndex = 10
+        Me.btnDeleteRow.Text = "刪除一行"
+        Me.btnDeleteRow.UseVisualStyleBackColor = False
         '
         'Form1
         '
@@ -372,4 +385,5 @@ Partial Class Form1
     Friend WithEvents btnSummary As Button
     Friend WithEvents Label3 As Label
     Friend WithEvents DateTimePicker1 As DateTimePicker
+    Friend WithEvents btnDeleteRow As Button
 End Class

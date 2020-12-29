@@ -90,8 +90,8 @@ Public Class clsSummary
                 conn.ConnectionString = strConn
                 conn.Open()
                 Dim cmd As OleDbCommand = New OleDbCommand("select Sum(totalAmt) from [TrxHeader$] where trxid<>null;", conn)
-                Dim intCount As Integer = cmd.ExecuteScalar
-                Return intCount
+                Dim decCount As Decimal = cmd.ExecuteScalar
+                Return decCount
             Catch ex As Exception
                 Dim err As String = "clsSummary.getSumAmt:" & vbCrLf & ex.Message
                 Diagnostics.Debug.WriteLine(err)

@@ -5,6 +5,7 @@
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "簡易收銀系統"
         Me.dgvTrxLine.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        Me.dgvItem.SelectionMode = DataGridViewSelectionMode.FullRowSelect
         objItems.loadItem()
         If TabControl1.SelectedIndex = 0 Then
             Me.txtInput.Text = ""
@@ -183,5 +184,23 @@
         reportmsg = String.Format("交易次數：{0} 單，{1}貨物銷售： {2} 件，{3}交易總額：{4} 元",
                                                 numoftrx_1, vbCrLf, numofitemsold_1, vbCrLf, sumofamt_1)
         MsgBox(reportmsg, vbOKOnly, "交易總結")
+    End Sub
+
+    Private Sub btnDeleteRow_Click(sender As Object, e As EventArgs) Handles btnDeleteRow.Click
+        Dim currIndex As Integer = dgvTrxLine.CurrentRow.Index
+        Diagnostics.Debug.WriteLine("Current Index: " & currIndex.ToString)
+        If currIndex = -1 Then
+            Return
+        End If
+        Dim SelectedIndex As Integer = dgvTrxLine.SelectedRows(0).Index
+        Diagnostics.Debug.WriteLine("Selected Index: " & SelectedIndex.ToString)
+        If SelectedIndex = -1 Then
+            Return
+        End If
+        dgvTrxLine.Rows.RemoveAt(SelectedIndex)
+        calTotal()
+        If dgvTrxLine.Rows.Count > 0 Then
+            dgvTrxLine.Rows(dgvTrxLine.Rows.Count - 1).Selected = True
+        End If
     End Sub
 End Class
